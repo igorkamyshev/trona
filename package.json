@@ -1,0 +1,33 @@
+{
+  "name": "trona-evolutions",
+  "version": "0.0.1",
+  "description": "Simple library providing scala-play like evolutions",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "trona-evolutions-iniit": "./bin/init.js",
+    "trona-evolutions-run": "./bin/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solid-soda/trona-evolutions.git"
+  },
+  "keywords": [
+    "sql",
+    "database",
+    "migrations"
+  ],
+  "author": "Stanislav Golikov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solid-soda/trona-evolutions/issues"
+  },
+  "homepage": "https://github.com/solid-soda/trona-evolutions#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "md5": "^2.2.1",
+    "mysql": "^2.15.0",
+    "path": "^0.12.7"
+  }
+}
