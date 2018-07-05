@@ -1,12 +1,12 @@
 {
   "name": "trona-evolutions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "trona-evolutions-iniit": "./bin/init.js",
+    "trona-evolutions-init": "./bin/init.js",
     "trona-evolutions-run": "./bin/run.js"
   },
   "repository": {

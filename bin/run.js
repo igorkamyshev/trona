@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const path = require('path')
 const md5 = require('md5')
 
