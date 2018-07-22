@@ -48,10 +48,10 @@ exports object containing fields:
 1) runQuery - MANDATORY callback that accepts SQL as it's first argument and returns Promise object 
 which is rejected in case of failure of said query and in case of SELECT query successfully 
 executed contains array of selected rows in form of an object {[field]: value}.
-2) tableName - OPTIONALLY name of tha table that would contain information about evolutions, it would
+2) tableName - OPTIONALLY name of the table that would contain information about evolutions, it would
 be created automatically by init script. Default - "evolutions".
 3) evolutionsFolderPath - OPTIONALLY relative path to folder that contains .sql files of migration
-scripts if form of a sring or string[]. Default - "evolutions".
+scripts if form of a string or string[]. Default - "evolutions".
 
 Example of a config for mysql database:
 
