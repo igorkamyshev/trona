@@ -3,7 +3,8 @@
   "version": "0.0.3",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --fix"
   },
   "bin": {
     "trona-evolutions-init": "./bin/init.js",
@@ -28,5 +29,9 @@
     "fs": "0.0.1-security",
     "md5": "^2.2.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@solid-soda/eslint-config": "^2.1.4",
+    "eslint": "^5.2.0"
   }
 }
