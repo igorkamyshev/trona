@@ -7,8 +7,7 @@
     "lint": "eslint . --fix"
   },
   "bin": {
-    "trona-evolutions-init": "./bin/init.js",
-    "trona-evolutions-run": "./bin/run.js"
+    "trona-evolutions": "./bin/index.js"
   },
   "repository": {
     "type": "git",

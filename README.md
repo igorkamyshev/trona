@@ -18,7 +18,7 @@ CREATE TABLE evolutions (
 );
 
 Evolutions table successfully created!
-foo@bar:~$ trona-evolutions-run
+foo@bar:~$ trona-evolutions
 Running evolve script
 
 --- 1.sql ---
@@ -35,7 +35,7 @@ Evolution is successful!
 foo@bar:~$
 ```
 
-##Installation and configuration
+## Installation and configuration
 
 First you need to install trona-evolutions globally via npm
 
@@ -48,10 +48,10 @@ exports object containing fields:
 1) runQuery - MANDATORY callback that accepts SQL as it's first argument and returns Promise object 
 which is rejected in case of failure of said query and in case of SELECT query successfully 
 executed contains array of selected rows in form of an object {[field]: value}.
-2) tableName - OPTIONALLY name of the table that would contain information about evolutions, it would
+2) tableName - OPTIONALLY name of tha table that would contain information about evolutions, it would
 be created automatically by init script. Default - "evolutions".
 3) evolutionsFolderPath - OPTIONALLY relative path to folder that contains .sql files of migration
-scripts if form of a string or string[]. Default - "evolutions".
+scripts if form of a sring or string[]. Default - "evolutions".
 
 Example of a config for mysql database:
 
@@ -90,7 +90,7 @@ module.exports = {
 After module have been installed run command and .trona-config.js created run
 
 ```console
-foo@bar:~$ trona-evolutions-init
+foo@bar:~$ trona-evolutions --init
 ```
 
 This command will create table with information about evolutions.
@@ -130,7 +130,7 @@ Run command
 foo@bar:~$ trona-evolutions-run
 ```
 
-##Usage
+## Usage
 After you managed to successfully setup trona-evolutions you can run trona-evolutions-run command.
 This command will automatically detect any changed or new files in your evolutions folder, run
 respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql,
