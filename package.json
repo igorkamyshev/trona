@@ -1,6 +1,6 @@
 {
   "name": "trona-evolutions",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
