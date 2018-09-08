@@ -127,7 +127,7 @@ DROP TABLE Customers;
 
 Run command 
 ```console
-foo@bar:~$ trona-evolutions-run
+foo@bar:~$ trona-evolutions
 ```
 
 ## Usage
