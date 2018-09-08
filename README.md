@@ -7,7 +7,7 @@ migration scenarios using sql and run them with a single console command.
 ## Usage example
 
 ```console
-foo@bar:~$ trona-evolutions-init
+foo@bar:~$ trona-evolutions --init
 Initializing evolutions table evolutions
 
 CREATE TABLE evolutions (
