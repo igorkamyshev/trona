@@ -1,5 +1,5 @@
 {
-  "name": "trona-evolutions",
+  "name": "@solid-soda/evolutions",
   "version": "0.0.5",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
