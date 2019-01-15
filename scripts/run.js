@@ -26,11 +26,11 @@ module.exports = () => {
       if (!evolutions.length && files.length) {
         return Promise.resolve(files)
       }
-  
+
       const filesChecksumMap = {}
       const evolutionsChecksumMap = {}
       let firstInvalidEvolution = Number.MAX_SAFE_INTEGER
-  
+
       const evolutionIdsSet = new Set()
       files.forEach(({ id, checksum }) => {
         filesChecksumMap[id] = checksum
@@ -52,8 +52,8 @@ module.exports = () => {
           firstInvalidEvolution = id
         }
       })
-  
-  
+
+
       if (firstInvalidEvolution === Number.MAX_SAFE_INTEGER) {
         console.log(Green, 'All your database evolutions already consistent')
         process.exit(0)
@@ -66,7 +66,7 @@ module.exports = () => {
         console.log(Yellow, `There are ${invalidEvolution.length} inconsistent evolutions`)
         console.log(Yellow, 'Running degrade script')
       }
-  
+
       return invalidEvolution
         .reduceRight((promise, { id, down_script }) => promise /* eslint-disable-line camelcase */
           .then(() => {
@@ -74,7 +74,7 @@ module.exports = () => {
             console.log(Yellow, `--- ${id}.sql ---`)
             console.log('')
             console.log(Yellow, down_script)
-  
+
             return runQuery(down_script)
           })
           .then(() => runQuery(`DELETE FROM ${tableName} WHERE id = ${id};`)), Promise.resolve())
@@ -84,15 +84,15 @@ module.exports = () => {
       console.log('')
       console.log(Blue, 'Running evolve script')
       console.log('')
-  
+
       return files.reduce((promise, { data, checksum, id }) => {
         const [upScript, downScript] = data.split('#DOWN')
-  
+
         console.log(Blue, `--- ${id}.sql ---`)
         console.log('')
         console.log(Blue, upScript)
         console.log('')
-  
+
         return promise
           .then(() => runQuery(upScript))
           .then(() => runQuery(`INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${downScript ? `'${downScript}'` : 'NULL'});`))
@@ -107,6 +107,5 @@ module.exports = () => {
         console.error(Red, error)
         process.exit(1)
       },
-    )  
+    )
 }
-

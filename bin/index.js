@@ -3,9 +3,9 @@ const commandLineArgs = require('command-line-args')
 
 
 const optionDefinitions = [
-  {name: 'init', alias: 'i', type: Boolean},
+  { name: 'init', alias: 'i', type: Boolean },
 ]
-const {init} = commandLineArgs(optionDefinitions)
+const { init } = commandLineArgs(optionDefinitions)
 
 if (init) {
   require('../scripts/init')()
