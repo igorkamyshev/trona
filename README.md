@@ -1,4 +1,4 @@
-# trona-evolitions
+# @solid-soda/evolitions
 
 Often your migration scenarios are as good as ORM you using. Sometimes it leads to inability (without
 some extra efforts) to use all features of your chosen DB. This library allows you to write 
@@ -40,7 +40,7 @@ foo@bar:~$
 First you need to install trona-evolutions globally via npm
 
 ```console
-foo@bar:~$ npm install -g trona-evolutions
+foo@bar:~$ npm install -g @solid-soda/evolitions
 ```
 
 Than you need to setup simple configuration file named .trona-config.js and containing script that
