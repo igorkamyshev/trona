@@ -1,4 +1,4 @@
-# trona-evolitions
+# @solid-soda/evolitions
 
 Often your migration scenarios are as good as ORM you using. Sometimes it leads to inability (without
 some extra efforts) to use all features of your chosen DB. This library allows you to write 
@@ -7,7 +7,7 @@ migration scenarios using sql and run them with a single console command.
 ## Usage example
 
 ```console
-foo@bar:~$ trona-evolutions --init
+foo@bar:~$ evolitions --init
 Initializing evolutions table evolutions
 
 CREATE TABLE evolutions (
@@ -18,7 +18,7 @@ CREATE TABLE evolutions (
 );
 
 Evolutions table successfully created!
-foo@bar:~$ trona-evolutions
+foo@bar:~$ evolitions
 Running evolve script
 
 --- 1.sql ---
@@ -40,7 +40,7 @@ foo@bar:~$
 First you need to install trona-evolutions globally via npm
 
 ```console
-foo@bar:~$ npm install -g trona-evolutions
+foo@bar:~$ npm install -g @solid-soda/evolitions
 ```
 
 Than you need to setup simple configuration file named .trona-config.js and containing script that
@@ -90,7 +90,7 @@ module.exports = {
 After module have been installed run command and .trona-config.js created run
 
 ```console
-foo@bar:~$ trona-evolutions --init
+foo@bar:~$ evolitions --init
 ```
 
 This command will create table with information about evolutions.
@@ -127,11 +127,11 @@ DROP TABLE Customers;
 
 Run command 
 ```console
-foo@bar:~$ trona-evolutions
+foo@bar:~$ evolutions
 ```
 
 ## Usage
-After you managed to successfully setup trona-evolutions you can run trona-evolutions-run command.
+After you managed to successfully setup @solid-soda/evolitions you can run evolutions-run command.
 This command will automatically detect any changed or new files in your evolutions folder, run
 respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql,
 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will 

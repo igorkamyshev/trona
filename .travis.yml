@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- '6'
+- '8'
+- '10'
+before_install:
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.3.2
+- export PATH="$HOME/.yarn/bin:$PATH"
+cache: yarn
+script: yarn lint
+deploy:
+  provider: npm
+  email: igor@kamyshev.me
+  api_key:
+    secure: K9yiyzC39TXprqIkCfbHzrKNJATNjnyWwwfLMxCz9ImwSXm7f978TOF9EX7IDkDFMcibmyH1jYGsNexfLiIRCA+tlZArjI8ojcpB59ojqhXaKr+6WDi/wKZ9jjBmgPzEmE9J7bL6wjkmPPE/Ds47/CiRj7e2xi58+x1hJ/yYql4wJ2tztDYPJC4/XzbsWBdsAzd4Y98cLRUhf5Hz/CEkq16yOE6045DVrguC9OZZdnhH6UUG/3aG0579nXApLqbiyTWkmfTPWfRMgE3U/6+55RE9PxgKghGopLteMMe75btLIQ/85uhABUhGO4nK6yW7IC3EctJSj5nMYSIxFQINwEPTtYQCaJRoDtNxJPbd8r+35NZBN41/Z/RSync06FlBFMnJXPj2TA/DHdQBKj7fY3IGVooyn+ALcB+NwWGkFhWPiYWY9MZIEubt3Gp2BcHLfuSyi7AAIspWXCX0k0RUZ25Ln3ZgevisrXXSeg29aGOhOaitlNQeykv7SDxlYnzIOL91IDBSjfw4RXYmA+9yV/KyisHWCAGhOf95yrfnXGmto85jS5zGGa9oY/wqacyGxiUmYL6f4Jb3pu86pzg9ReDKDfnKnc9W20reP6vi3MzufTUaH0R3Z5p4u7P6blC+cAYSevY7q7THD9sstGeCatoF4bjZUnrPlHEQH/MkRN0=
+  on:
+    tags: true
+    repo: solid-soda/evolutions
