@@ -1,5 +1,5 @@
 {
-  "name": "trona-evolutions",
+  "name": "@solid-soda/evolutions",
   "version": "0.0.5",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
@@ -7,7 +7,7 @@
     "lint": "eslint . --fix"
   },
   "bin": {
-    "trona-evolutions": "./bin/index.js"
+    "evolutions": "./bin/index.js"
   },
   "repository": {
     "type": "git",
