@@ -1,6 +1,5 @@
 const path = require('path')
 const md5 = require('md5')
-const { escape } = require('sqlstring')
 
 const validateConfig = require('../lib/validateConfig')
 const {
@@ -88,6 +87,7 @@ module.exports = () => {
 
       return files.reduce((promise, { data, checksum, id }) => {
         const [upScript, downScript] = data.split('#DOWN')
+          .map(s => s.replace(/'/g, '"'))
 
         console.log(Blue, `--- ${id}.sql ---`)
         console.log('')
@@ -96,7 +96,7 @@ module.exports = () => {
 
         return promise
           .then(() => runQuery(upScript))
-          .then(() => runQuery(`INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${downScript ? `'${escape(downScript)}'` : 'NULL'});`))
+          .then(() => runQuery(`INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${downScript ? `'${downScript}'` : 'NULL'});`))
       }, Promise.resolve())
     })
     .then(
