@@ -28,7 +28,8 @@
     "command-line-args": "^5.0.2",
     "fs": "0.0.1-security",
     "md5": "^2.2.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sqlstring": "^2.3.1"
   },
   "devDependencies": {
     "@solid-soda/eslint-config": "^2.1.4",
