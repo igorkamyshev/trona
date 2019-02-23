@@ -3,7 +3,8 @@
   "version": "0.0.10",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
-    "s": "yarn soda"
+    "s": "yarn soda",
+    "postinstall": "yarn soda post-install"
   },
   "bin": {
     "evolutions": "./bin/index.js"
@@ -30,29 +31,15 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@solid-soda/scripts": "^1.0.6"
+    "@solid-soda/scripts": "^1.1.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "yarn soda lint-staged",
+      "commit-msg": "yarn soda commitlint"
     }
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "yarn soda lint"
-    ],
-    "*.{js,jsx,ts,tsx,css,json}": [
-      "yarn soda pretty",
-      "git add"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   }
 }
