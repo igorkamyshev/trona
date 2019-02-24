@@ -3,8 +3,7 @@
   "version": "0.0.11",
   "description": "Simple library providing scala-play like evolutions",
   "scripts": {
-    "s": "yarn soda",
-    "postinstall": "yarn soda post-install"
+    "s": "yarn soda"
   },
   "bin": {
     "evolutions": "./bin/index.js"
@@ -31,7 +30,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@solid-soda/scripts": "^1.1.2"
+    "@solid-soda/scripts": "^1.1.3"
   },
   "publishConfig": {
     "access": "public"
