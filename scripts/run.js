@@ -107,7 +107,6 @@ module.exports = () => {
       return files.reduce((promise, { data, checksum, id }) => {
         const [upScript, downScript] = data
           .split('#DOWN')
-          .map(s => s.replace(/'/g, '"'))
 
         console.log(Blue, `--- ${id}.sql ---`)
         console.log('')
@@ -119,7 +118,7 @@ module.exports = () => {
           .then(() =>
             runQuery(
               `INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${
-                downScript ? `'${downScript}'` : 'NULL'
+                downScript ? `'${downScript.replace(/'/g, "''")}'` : 'NULL'
               });`,
             ),
           )
