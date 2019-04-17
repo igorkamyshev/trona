@@ -259,9 +259,9 @@
     any-observable "^0.3.0"
 
 "@solid-soda/scripts@^1.1.3":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.4.1.tgz#43f5d92964546850a2c170f13b745535ed61d69a"
-  integrity sha512-5RtVX1tuCu48o2Q10JUnw5telAYMMpiu4S9VTuJaVgamiwuX7FfUXzIqA1lnb1QEwnYiwLJr9RJ4owezFVdQ6Q==
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.6.3.tgz#946b0134470223b61cf9ae2990a8b35d05caf1da"
+  integrity sha512-5H4h9n8vPCL8pmTIH9m9TB+/GOxCuGRsgtBTx5yLfaonS2tGivipoZDrkSTJePEjJWnM9L6i4MSDO3lB/CqxkA==
   dependencies:
     "@commitlint/cli" "7"
     "@commitlint/config-conventional" "7"
@@ -274,7 +274,8 @@
     cz-conventional-changelog "2"
     edit-json-file "1.2.1"
     eslint "5"
-    eslint-plugin-react "^7.12.4"
+    eslint-plugin-react "7"
+    eslint-plugin-react-hooks "1"
     find "0.2.9"
     fs-extra "^7.0.1"
     husky "1"
@@ -1277,7 +1278,12 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.4, escape-string-regexp@^
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-plugin-react@^7.12.4:
+eslint-plugin-react-hooks@1:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.6.0.tgz#348efcda8fb426399ac7b8609607c7b4025a6f5f"
+  integrity sha512-lHBVRIaz5ibnIgNG07JNiAuBUeKhEf8l4etNx5vfAEwqQ5tcuK3jV9yjmopPgQDagQb7HwIuQVsE3IVcGrRnag==
+
+eslint-plugin-react@7:
   version "7.12.4"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.12.4.tgz#b1ecf26479d61aee650da612e425c53a99f48c8c"
   integrity sha512-1puHJkXJY+oS1t467MjbqjvX53uQ05HXwjqDgdbGBqf5j9eeydI54G3KwiJmWciQ0HTBacIKw2jgwSBSH3yfgQ==
