@@ -259,9 +259,9 @@
     any-observable "^0.3.0"
 
 "@solid-soda/scripts@^1.1.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.6.3.tgz#946b0134470223b61cf9ae2990a8b35d05caf1da"
-  integrity sha512-5H4h9n8vPCL8pmTIH9m9TB+/GOxCuGRsgtBTx5yLfaonS2tGivipoZDrkSTJePEjJWnM9L6i4MSDO3lB/CqxkA==
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.7.0.tgz#01eb0b215ff16a8d0182173ae08222ae65b84b04"
+  integrity sha512-NCkdfDexogGsdSfWnNe37Me1vGE6TU36MzirSQDCZUu7/3IO4yusWzSrQiTf/O/rpNj6sUKFE1M+RTUSyU1/3g==
   dependencies:
     "@commitlint/cli" "7"
     "@commitlint/config-conventional" "7"
@@ -276,6 +276,7 @@
     eslint "5"
     eslint-plugin-react "7"
     eslint-plugin-react-hooks "1"
+    eslint-plugin-react-hooks-breadhead "^1.0.0"
     find "0.2.9"
     fs-extra "^7.0.1"
     husky "1"
@@ -1277,6 +1278,11 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.4, escape-string-regexp@^
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+eslint-plugin-react-hooks-breadhead@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks-breadhead/-/eslint-plugin-react-hooks-breadhead-1.0.0.tgz#3848a3310eae65a6bb30de2c85fdb75b22d82570"
+  integrity sha512-N5NV+2Tv1Ec6r6uQiyTwWr7B5HrUMLlajODVI+bs2yZ6uzpJJlE3vgTB1WAlRRAfv4Iheb89VnpDXp2deSyNqg==
 
 eslint-plugin-react-hooks@1:
   version "1.6.0"
