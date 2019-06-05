@@ -357,9 +357,9 @@
     any-observable "^0.3.0"
 
 "@solid-soda/scripts@^1.1.3":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.9.1.tgz#f06f635fb048a4b95a599cefc2d0e86040e6920c"
-  integrity sha512-twWJloDd0bc/Y4DgTVUhsLu+Qr2mPFm/K6H/MOIzf9t38mqD9Qx/PFFYU69ckUgC8mwF5pOIH2xhhXotwimAgw==
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.11.4.tgz#a1443b6fcdfff1d917522e21f3e6620afd6eab8b"
+  integrity sha512-4FEz23mD3kM8OypVpnpsnxFfIlbpqdEdFNcH3kutSuRPyKnHeqaDSv5eDKQMK/8p6WIwCVQFDxBuJIY5U8VI8Q==
   dependencies:
     "@commitlint/cli" "7"
     "@commitlint/config-conventional" "7"
@@ -379,6 +379,8 @@
     fs-extra "^7.0.1"
     husky "1"
     lint-staged "8"
+    lodash "^4.17.11"
+    nanomerge "^0.2.0"
     prettier "1"
     standard-version "5"
     stylelint "^10.0.1"
@@ -3343,6 +3345,11 @@ mute-stream@0.0.7:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
+nanoclone@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/nanoclone/-/nanoclone-0.1.5.tgz#2c80c672a85471ec46ba588f40cac6b5ff9de41e"
+  integrity sha1-LIDGcqhUcexGuliPQMrGtf+d5B4=
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -3359,6 +3366,13 @@ nanomatch@^1.2.9:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+nanomerge@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nanomerge/-/nanomerge-0.2.0.tgz#ad29c5b24c7111095b4d8113fe8b22a3d75f34af"
+  integrity sha512-b929MpaA7PBFWggbjaqJUWbmFZlhqdgy7d1n3HvS9QRnkdifwsBijQ6Ap/ajaE1V7nc8w1VIS8DI2fOGbIxB3w==
+  dependencies:
+    nanoclone "^0.1.5"
 
 natural-compare@^1.4.0:
   version "1.4.0"
