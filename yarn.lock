@@ -357,9 +357,9 @@
     any-observable "^0.3.0"
 
 "@solid-soda/scripts@^1.1.3":
-  version "1.11.15"
-  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.11.15.tgz#03fd6a570debcdca3148e7d42932b6c3d7880c28"
-  integrity sha512-Fww12jE3jlDb43XbmBorXdgMyfWLa/gMoZxR5hOTLzKkhEMiosLGbTiyR4c2pwQHpKuOLHqVM0DLuozONnkIKQ==
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/@solid-soda/scripts/-/scripts-1.12.3.tgz#bd8b873162f7b7c30f03d0bed130bfe3fe2e2e15"
+  integrity sha512-gWeR5n8vyS4wJjml0eFZGd70Hez5gjAKCeDVwsD7VumLQ1a6AZlVGq/EAYsDlSDTRpQBtr/4D1t0rBU7oBkxeg==
   dependencies:
     "@commitlint/cli" "7"
     "@commitlint/config-conventional" "7"
@@ -375,11 +375,11 @@
     eslint-plugin-react "7"
     eslint-plugin-react-hooks "1"
     eslint-plugin-react-hooks-breadhead "^1.0.0"
-    find "0.2.9"
     fs-extra "^8.0.1"
     husky "1"
     lint-staged "8"
     lodash "^4.17.11"
+    nanoclone "^0.2.1"
     nanomerge "^0.2.0"
     prettier "1"
     standard-version "^6.0.1"
@@ -1944,13 +1944,6 @@ find-value@^1.0.3:
   resolved "https://registry.yarnpkg.com/find-value/-/find-value-1.0.11.tgz#493c062884d4aa26a66571adedea98a46ad3a060"
   integrity sha512-ECGsf/85PJgK/kOv6q1/MA1pawuBvQi12td/7MQHakfE7/P2jFgUeo0BL1dbAF97DPOTrtsrFBHkwBnPMWZiKg==
 
-find@0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/find/-/find-0.2.9.tgz#4b73f1ff9e56ad91b76e716407fe5ffe6554bb8c"
-  integrity sha1-S3Px/55WrZG3bnFkB/5f/mVUu4w=
-  dependencies:
-    traverse-chain "~0.1.0"
-
 findup-sync@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-3.0.0.tgz#17b108f9ee512dfb7a5c7f3c8b27ea9e1a9c08d1"
@@ -3391,6 +3384,11 @@ nanoclone@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/nanoclone/-/nanoclone-0.1.5.tgz#2c80c672a85471ec46ba588f40cac6b5ff9de41e"
   integrity sha1-LIDGcqhUcexGuliPQMrGtf+d5B4=
+
+nanoclone@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/nanoclone/-/nanoclone-0.2.1.tgz#dd4090f8f1a110d26bb32c49ed2f5b9235209ed4"
+  integrity sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -4916,11 +4914,6 @@ toposort@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
   integrity sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
-
-traverse-chain@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/traverse-chain/-/traverse-chain-0.1.0.tgz#61dbc2d53b69ff6091a12a168fd7d433107e40f1"
-  integrity sha1-YdvC1Ttp/2CRoSoWj9fUMxB+QPE=
 
 trim-newlines@^1.0.0:
   version "1.0.0"
