@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.14](https://github.com/solid-soda/trona-evolutions/compare/v0.0.13...v0.0.14) (2019-07-25)
+
+
+### Bug Fixes
+
+* now files sorting correctly ([d7cc5d8](https://github.com/solid-soda/trona-evolutions/commit/d7cc5d8))
+
+
+
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 ## [0.0.13](https://github.com/solid-soda/trona-evolutions/compare/v0.0.12...v0.0.13) (2019-04-08)
 
 
