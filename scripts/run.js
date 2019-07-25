@@ -5,6 +5,8 @@ const validateConfig = require('../lib/validateConfig')
 const { Red, Yellow, Green, Blue } = require('../lib/colors')
 const { getFiles, getFileContent } = require('../lib/fs')
 
+const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
+
 module.exports = () => {
   const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
@@ -13,13 +15,16 @@ module.exports = () => {
   getFiles(evolutionsDir)
     .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
     .then(files =>
+      files.sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b)),
+    )
+    .then(files =>
       Promise.all(
         files.map(file =>
           getFileContent(path.join(evolutionsDir, file)).then(data => ({
             data,
             file,
             checksum: md5(data),
-            id: parseInt(file.split('.').shift(), 10),
+            id: fileNameToNumber(file),
           })),
         ),
       ),
@@ -105,8 +110,7 @@ module.exports = () => {
       console.log('')
 
       return files.reduce((promise, { data, checksum, id }) => {
-        const [upScript, downScript] = data
-          .split('#DOWN')
+        const [upScript, downScript] = data.split('#DOWN')
 
         console.log(Blue, `--- ${id}.sql ---`)
         console.log('')
