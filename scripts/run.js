@@ -4,14 +4,22 @@ const md5 = require('md5')
 const validateConfig = require('../lib/validateConfig')
 const { Red, Yellow, Green, Blue } = require('../lib/colors')
 const { getFiles, getFileContent } = require('../lib/fs')
+const {
+  confirmOperation,
+  OperationDeclinedError,
+} = require('../lib/operationConfirmation')
 
 const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
 
-module.exports = () => {
+module.exports = interactive => {
   const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
   )
   const evolutionsDir = path.join(process.cwd(), ...evolutionsFolderPath)
+  const awaitConfirmation = interactive
+    ? confirmOperation
+    : () => Promise.resolve()
+
   getFiles(evolutionsDir)
     .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
     .then(files =>
@@ -82,7 +90,6 @@ module.exports = () => {
           Yellow,
           `There are ${invalidEvolution.length} inconsistent evolutions`,
         )
-        console.log(Yellow, 'Running degrade script')
       }
 
       return invalidEvolution
@@ -92,9 +99,13 @@ module.exports = () => {
               .then(() => {
                 console.log('')
                 console.log(Yellow, `--- ${id}.sql ---`)
-                console.log('')
                 console.log(Yellow, down_script)
 
+                return awaitConfirmation(
+                  'Do you wish to run this degrade script?',
+                )
+              })
+              .then(() => {
                 return runQuery(down_script)
               })
               .then(() =>
@@ -112,13 +123,14 @@ module.exports = () => {
       return files.reduce((promise, { data, checksum, id }) => {
         const [upScript, downScript] = data.split('#DOWN')
 
-        console.log(Blue, `--- ${id}.sql ---`)
-        console.log('')
-        console.log(Blue, upScript)
-        console.log('')
-
         return promise
-          .then(() => runQuery(upScript))
+          .then(() => {
+            console.log('')
+            console.log(Blue, `--- ${id}.sql ---`)
+            console.log(Blue, upScript)
+
+            return runQuery(upScript)
+          })
           .then(() =>
             runQuery(
               `INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${
@@ -134,7 +146,11 @@ module.exports = () => {
         process.exit(0)
       },
       error => {
-        console.error(Red, error)
+        if (error instanceof OperationDeclinedError) {
+          console.error(Red, 'Operation aborted')
+        } else {
+          console.error(Red, error)
+        }
         process.exit(1)
       },
     )

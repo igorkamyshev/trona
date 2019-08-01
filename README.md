@@ -131,8 +131,18 @@ foo@bar:~$ evolutions
 ```
 
 ## Usage
+
 After you managed to successfully setup @solid-soda/evolitions you can run evolutions-run command.
 This command will automatically detect any changed or new files in your evolutions folder, run
 respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql,
 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will 
 run fallback for 3.sql and 2.sql and than run 2.sql, 3.sql, and 4.sql scripts)
+
+### Interactivity
+
+By default evolution script will ask for a confirmation to run a degrade script.
+But you can disable this feature by ```-y``` or ```--no-interactive``` flag.
+
+```console
+foo@bar:~$ evolutions -y
+```
