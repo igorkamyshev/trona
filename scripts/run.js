@@ -3,155 +3,125 @@ const md5 = require('md5')
 
 const validateConfig = require('../lib/validateConfig')
 const { Red, Yellow, Green, Blue } = require('../lib/colors')
+const { forEach, map, reduce } = require('../lib/asyncIterators')
 const { getFiles, getFileContent } = require('../lib/fs')
 const {
   confirmOperation,
   OperationDeclinedError,
 } = require('../lib/operationConfirmation')
+const EvolutionTableDriver = require('../lib/EvolutionTableDriver')
 
 const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
 
-module.exports = interactive => {
-  const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
-    require(path.join(process.cwd(), '.trona-config.js')),
-  )
-  const evolutionsDir = path.join(process.cwd(), ...evolutionsFolderPath)
-  const awaitConfirmation = interactive
-    ? confirmOperation
-    : () => Promise.resolve()
+module.exports = async interactive => {
+  try {
+    const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
+      require(path.join(process.cwd(), '.trona-config.js')),
+    )
+    const evolutionsDir = path.join(process.cwd(), ...evolutionsFolderPath)
+    const awaitConfirmation = interactive
+      ? confirmOperation
+      : () => Promise.resolve()
+    const tableDriver = new EvolutionTableDriver(runQuery, tableName)
 
-  getFiles(evolutionsDir)
-    .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
-    .then(files =>
-      files.sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b)),
-    )
-    .then(files =>
-      Promise.all(
-        files.map(file =>
-          getFileContent(path.join(evolutionsDir, file)).then(data => ({
-            data,
-            file,
-            checksum: md5(data),
-            id: fileNameToNumber(file),
-          })),
-        ),
-      ),
-    )
-    .then(files =>
-      runQuery(
-        `SELECT id, checksum, down_script FROM ${tableName} ORDER BY id ASC;`,
-      ).then(evolutions => ({ files, evolutions })),
-    )
-    .then(({ files, evolutions }) => {
-      if (!evolutions.length && files.length) {
-        return Promise.resolve(files)
+    const fileNames = (await getFiles(evolutionsDir))
+      .filter(fileName => /^\d+\.sql$/.test(fileName))
+      .sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b))
+
+    const files = await map(async file => {
+      const data = await getFileContent(path.join(evolutionsDir, file))
+      const [upScript, downScript] = data.split('#DOWN')
+
+      return {
+        data,
+        upScript,
+        downScript,
+        file,
+        checksum: md5(data),
+        id: fileNameToNumber(file),
+      }
+    }, fileNames)
+
+    const evolutions = await tableDriver.getEvolutions()
+
+    // If inconsistent state is possible
+    const checksumsMap = {}
+
+    const addChecksum = sumName => ({ id, checksum }) => {
+      if (!checksumsMap[id]) {
+        checksumsMap[id] = {}
+      }
+      checksumsMap[id][sumName] = checksum
+    }
+
+    files.forEach(addChecksum('fileSumm'))
+    evolutions.forEach(addChecksum('evolutionSumm'))
+    const evolutionIds = Object.keys(checksumsMap).sort((a, b) => a - b)
+
+    const firstInvalidEvolution = evolutionIds.reduce((carry, id) => {
+      if (carry < Number.MAX_SAFE_INTEGER) {
+        return carry
+      }
+      const { fileSumm, evolutionSumm } = checksumsMap[id]
+
+      if (!fileSumm || !evolutionSumm || evolutionSumm !== fileSumm) {
+        return id
       }
 
-      const filesChecksumMap = {}
-      const evolutionsChecksumMap = {}
-      let firstInvalidEvolution = Number.MAX_SAFE_INTEGER
+      return carry
+    }, Number.MAX_SAFE_INTEGER)
 
-      const evolutionIdsSet = new Set()
-      files.forEach(({ id, checksum }) => {
-        filesChecksumMap[id] = checksum
-        evolutionIdsSet.add(id)
-      })
-      evolutions.forEach(({ checksum, id }) => {
-        evolutionsChecksumMap[id] = checksum
-        evolutionIdsSet.add(id)
-      })
-      const evolutionIds = Array.from(evolutionIdsSet).sort((a, b) => a - b)
-      evolutionIds.forEach(id => {
-        if (
-          id < firstInvalidEvolution &&
-          (!filesChecksumMap[id] ||
-            !evolutionsChecksumMap[id] ||
-            filesChecksumMap[id] !== evolutionsChecksumMap[id])
-        ) {
-          firstInvalidEvolution = id
-        }
-      })
+    if (firstInvalidEvolution === Number.MAX_SAFE_INTEGER) {
+      console.log(Green, 'All your database evolutions already consistent')
+      process.exit(0)
+    }
 
-      if (firstInvalidEvolution === Number.MAX_SAFE_INTEGER) {
-        console.log(Green, 'All your database evolutions already consistent')
-        process.exit(0)
-      } else {
-        console.log(
-          Yellow,
-          `Your first inconsistent evolution is ${firstInvalidEvolution}.sql`,
-        )
-        // TODO: ask if user wants to continue
-      }
-      const invalidEvolution = evolutions.filter(
-        ({ id }) => id >= firstInvalidEvolution,
+    console.log(
+      Yellow,
+      `Your first inconsistent evolution is ${firstInvalidEvolution}.sql`,
+    )
+    const invalidEvolutions = evolutions.filter(
+      ({ id }) => id >= firstInvalidEvolution,
+    )
+
+    if (invalidEvolutions.length) {
+      console.log(
+        Yellow,
+        `There are ${invalidEvolutions.length} inconsistent evolutions`,
       )
-      if (invalidEvolution.length) {
-        console.log(
-          Yellow,
-          `There are ${invalidEvolution.length} inconsistent evolutions`,
-        )
-      }
+    }
 
-      return invalidEvolution
-        .reduceRight(
-          (promise, { id, down_script }) =>
-            promise /* eslint-disable-line camelcase */
-              .then(() => {
-                console.log('')
-                console.log(Yellow, `--- ${id}.sql ---`)
-                console.log(Yellow, down_script)
-
-                return awaitConfirmation(
-                  'Do you wish to run this degrade script?',
-                )
-              })
-              .then(() => {
-                return runQuery(down_script)
-              })
-              .then(() =>
-                runQuery(`DELETE FROM ${tableName} WHERE id = ${id};`),
-              ),
-          Promise.resolve(),
-        )
-        .then(() => files.filter(({ id }) => id >= firstInvalidEvolution))
-    })
-    .then(files => {
+    await forEach(async ({ id, down_script }) => {
       console.log('')
-      console.log(Blue, 'Running evolve script')
+      console.log(Yellow, `--- ${id}.sql ---`)
+      console.log(Yellow, down_script)
+
+      await awaitConfirmation('Do you wish to run this degrade script?')
+      await tableDriver.runQuery(down_script)
+      await tableDriver.removeEvolutionRecord(id)
+    }, invalidEvolutions.reverse())
+
+    console.log('')
+    console.log(Blue, 'Running evolve script')
+    console.log('')
+
+    await forEach(async ({ id, checksum, downScript, upScript }) => {
       console.log('')
+      console.log(Blue, `--- ${id}.sql ---`)
+      console.log(Blue, upScript)
 
-      return files.reduce((promise, { data, checksum, id }) => {
-        const [upScript, downScript] = data.split('#DOWN')
+      await tableDriver.runQuery(upScript)
+      await tableDriver.createEvolutionRecord(id, checksum, downScript)
+    }, files.filter(({ id }) => id >= firstInvalidEvolution))
 
-        return promise
-          .then(() => {
-            console.log('')
-            console.log(Blue, `--- ${id}.sql ---`)
-            console.log(Blue, upScript)
-
-            return runQuery(upScript)
-          })
-          .then(() =>
-            runQuery(
-              `INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${
-                downScript ? `'${downScript.replace(/'/g, "''")}'` : 'NULL'
-              });`,
-            ),
-          )
-      }, Promise.resolve())
-    })
-    .then(
-      () => {
-        console.log(Green, 'Evolution is successful!')
-        process.exit(0)
-      },
-      error => {
-        if (error instanceof OperationDeclinedError) {
-          console.error(Red, 'Operation aborted')
-        } else {
-          console.error(Red, error)
-        }
-        process.exit(1)
-      },
-    )
+    console.log(Green, 'Evolution is successful!')
+    process.exit(0)
+  } catch (error) {
+    if (error instanceof OperationDeclinedError) {
+      console.error(Red, 'Operation aborted')
+    } else {
+      console.error(Red, error)
+    }
+    process.exit(1)
+  }
 }
