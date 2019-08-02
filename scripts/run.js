@@ -11,8 +11,6 @@ const {
 } = require('../lib/operationConfirmation')
 const EvolutionTableDriver = require('../lib/EvolutionTableDriver')
 
-const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
-
 module.exports = async interactive => {
   try {
     const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
@@ -24,11 +22,11 @@ module.exports = async interactive => {
       : () => Promise.resolve()
     const tableDriver = new EvolutionTableDriver(runQuery, tableName)
 
-    const fileNames = (await getFiles(evolutionsDir))
-      .filter(fileName => /^\d+\.sql$/.test(fileName))
-      .sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b))
+    const fileNames = (await getFiles(evolutionsDir)).filter(fileName =>
+      /^\d+\.sql$/.test(fileName),
+    )
 
-    const files = await map(async file => {
+    const files = (await map(async file => {
       const data = await getFileContent(path.join(evolutionsDir, file))
       const [upScript, downScript] = data.split('#DOWN')
 
@@ -38,9 +36,9 @@ module.exports = async interactive => {
         downScript,
         file,
         checksum: md5(data),
-        id: fileNameToNumber(file),
+        id: parseInt(file.split('.').shift(), 10),
       }
-    }, fileNames)
+    }, fileNames)).sort((a, b) => a.id - b.id)
 
     const evolutions = await tableDriver.getEvolutions()
 
