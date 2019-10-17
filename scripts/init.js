@@ -42,7 +42,7 @@ module.exports = ({ skipFailure, exitAfterExecute } = defaultOptions) => {
             },
             error => {
               if (skipFailure) {
-                console.log(Green, 'Evolutions table already created!')
+                console.log(Green, "Can't create evolutions table!")
 
                 return 0
               }
