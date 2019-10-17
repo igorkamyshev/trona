@@ -4,7 +4,12 @@ const path = require('path')
 const validateConfig = require('../lib/validateConfig')
 const { Red, Yellow, Green } = require('../lib/colors')
 
-module.exports = () => {
+const defaultOptions = {
+  skipFailure: false,
+  exitAfterExecute: true,
+}
+
+module.exports = ({ skipFailure, exitAfterExecute } = defaultOptions) => {
   const { tableName, runQuery } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
   )
@@ -36,13 +41,23 @@ module.exports = () => {
               return 0
             },
             error => {
+              if (skipFailure) {
+                console.log(Green, 'Evolutions table already created!')
+
+                return 0
+              }
+
               console.log(Red, 'An error occured during initialization:')
               console.error(Red, error)
 
               return 1
             },
           )
-          .then(code => process.exit(code))
+          .then(code => {
+            if (exitAfterExecute) {
+              process.exit(code)
+            }
+          })
       }
     },
   )

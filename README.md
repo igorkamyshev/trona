@@ -146,3 +146,11 @@ But you can disable this feature by ```-y``` or ```--no-interactive``` flag.
 ```console
 foo@bar:~$ evolutions -y
 ```
+
+### Auto initializing
+
+By default, user must mannualy init evolutions table. But, in some cases this table must be auto-inited. Just use ```-w``` or ```--with-init`` flag.
+
+```console
+foo@bar:~$ evolutions -w
+```

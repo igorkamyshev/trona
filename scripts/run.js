@@ -9,9 +9,11 @@ const {
   OperationDeclinedError,
 } = require('../lib/operationConfirmation')
 
+const init = require('./init')
+
 const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
 
-module.exports = interactive => {
+module.exports = (interactive, withInit) => {
   const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
   )
@@ -20,7 +22,16 @@ module.exports = interactive => {
     ? confirmOperation
     : () => Promise.resolve()
 
-  getFiles(evolutionsDir)
+  const initializing = withInit
+    ? () =>
+        init({
+          skipFailure: true,
+          exitAfterExecute: false,
+        })
+    : () => Promise.resolve()
+
+  initializing()
+    .then(() => getFiles(evolutionsDir))
     .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
     .then(files =>
       files.sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b)),
