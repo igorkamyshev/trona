@@ -3,7 +3,7 @@ const md5 = require('md5')
 
 const validateConfig = require('../lib/validateConfig')
 const { Red, Yellow, Green, Blue } = require('../lib/colors')
-const { forEach, map, reduce } = require('../lib/asyncIterators')
+const { forEach, map } = require('../lib/asyncIterators')
 const { getFiles, getFileContent } = require('../lib/fs')
 const {
   confirmOperation,
