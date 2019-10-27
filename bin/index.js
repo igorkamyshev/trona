@@ -8,8 +8,7 @@ const optionDefinitions = [
 const args = commandLineArgs(optionDefinitions)
 const noInteractivity = args['no-interactive']
 
-if (args.init) {
-  require('../scripts/init')()
-} else {
-  require('../scripts/run')(!noInteractivity)
-}
+const operation = require(args.init ? '../scripts/init' : '../scripts/run')(
+  noInteractivity,
+)
+operation.then(() => process.exit(0), () => process.exit(1))

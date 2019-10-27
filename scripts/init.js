@@ -16,14 +16,13 @@ module.exports = async () => {
         path.join(__dirname, '..', 'lib', 'evolution_table.sql'),
       )
     } catch (err) {
-      console.log(
-        Red,
-        "Evolution's initialization failed! Can't read initial evolution sql file!",
-      )
       console.log('')
       console.log('')
       console.error(Red, err)
-      process.exit(1)
+
+      throw Error(
+        "Evolution's initialization failed! Can't read initial evolution sql file!",
+      )
     }
 
     const modifiedQuery = query.replace('$EVOLUTIONS', tableName)
@@ -34,10 +33,9 @@ module.exports = async () => {
 
     await runQuery(modifiedQuery)
     console.log(Green, 'Evolutions table successfully created!')
-    process.exit(0)
   } catch (error) {
     console.log(Red, 'An error occured during initialization:')
     console.error(Red, error)
-    process.exit(1)
+    throw error
   }
 }

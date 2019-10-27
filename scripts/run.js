@@ -71,7 +71,7 @@ module.exports = async interactive => {
 
     if (firstInvalidEvolution === Number.MAX_SAFE_INTEGER) {
       console.log(Green, 'All your database evolutions already consistent')
-      process.exit(0)
+      return
     }
 
     console.log(
@@ -113,13 +113,12 @@ module.exports = async interactive => {
     }, files.filter(({ id }) => id >= firstInvalidEvolution))
 
     console.log(Green, 'Evolution is successful!')
-    process.exit(0)
   } catch (error) {
     if (error instanceof OperationDeclinedError) {
       console.error(Red, 'Operation aborted')
     } else {
       console.error(Red, error)
     }
-    process.exit(1)
+    throw error
   }
 }
