@@ -1,24 +1,24 @@
-const path = require('path')
-const md5 = require('md5')
+const path = require('path');
+const md5 = require('md5');
 
-const validateConfig = require('../lib/validateConfig')
-const { Red, Yellow, Green, Blue } = require('../lib/colors')
-const { getFiles, getFileContent } = require('../lib/fs')
+const validateConfig = require('../lib/validateConfig');
+const { Red, Yellow, Green, Blue } = require('../lib/colors');
+const { getFiles, getFileContent } = require('../lib/fs');
 const {
   confirmOperation,
   OperationDeclinedError,
-} = require('../lib/operationConfirmation')
+} = require('../lib/operationConfirmation');
 
-const fileNameToNumber = file => parseInt(file.split('.').shift(), 10)
+const fileNameToNumber = file => parseInt(file.split('.').shift(), 10);
 
 module.exports = interactive => {
   const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
-  )
-  const evolutionsDir = path.join(process.cwd(), ...evolutionsFolderPath)
+  );
+  const evolutionsDir = path.join(process.cwd(), ...evolutionsFolderPath);
   const awaitConfirmation = interactive
     ? confirmOperation
-    : () => Promise.resolve()
+    : () => Promise.resolve();
 
   getFiles(evolutionsDir)
     .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
@@ -43,24 +43,24 @@ module.exports = interactive => {
       ).then(evolutions => ({ files, evolutions })),
     )
     .then(({ files, evolutions }) => {
-      if (!evolutions.length && files.length) {
-        return Promise.resolve(files)
+      if (evolutions.length === 0 && files.length !== 0) {
+        return Promise.resolve(files);
       }
 
-      const filesChecksumMap = {}
-      const evolutionsChecksumMap = {}
-      let firstInvalidEvolution = Number.MAX_SAFE_INTEGER
+      const filesChecksumMap = {};
+      const evolutionsChecksumMap = {};
+      let firstInvalidEvolution = Number.MAX_SAFE_INTEGER;
 
-      const evolutionIdsSet = new Set()
+      const evolutionIdsSet = new Set();
       files.forEach(({ id, checksum }) => {
-        filesChecksumMap[id] = checksum
-        evolutionIdsSet.add(id)
-      })
+        filesChecksumMap[id] = checksum;
+        evolutionIdsSet.add(id);
+      });
       evolutions.forEach(({ checksum, id }) => {
-        evolutionsChecksumMap[id] = checksum
-        evolutionIdsSet.add(id)
-      })
-      const evolutionIds = Array.from(evolutionIdsSet).sort((a, b) => a - b)
+        evolutionsChecksumMap[id] = checksum;
+        evolutionIdsSet.add(id);
+      });
+      const evolutionIds = Array.from(evolutionIdsSet).sort((a, b) => a - b);
       evolutionIds.forEach(id => {
         if (
           id < firstInvalidEvolution &&
@@ -68,28 +68,28 @@ module.exports = interactive => {
             !evolutionsChecksumMap[id] ||
             filesChecksumMap[id] !== evolutionsChecksumMap[id])
         ) {
-          firstInvalidEvolution = id
+          firstInvalidEvolution = id;
         }
-      })
+      });
 
       if (firstInvalidEvolution === Number.MAX_SAFE_INTEGER) {
-        console.log(Green, 'All your database evolutions already consistent')
-        process.exit(0)
+        console.log(Green, 'All your database evolutions already consistent');
+        process.exit(0);
       } else {
         console.log(
           Yellow,
           `Your first inconsistent evolution is ${firstInvalidEvolution}.sql`,
-        )
+        );
         // TODO: ask if user wants to continue
       }
       const invalidEvolution = evolutions.filter(
         ({ id }) => id >= firstInvalidEvolution,
-      )
-      if (invalidEvolution.length) {
+      );
+      if (invalidEvolution.length !== 0) {
         console.log(
           Yellow,
           `There are ${invalidEvolution.length} inconsistent evolutions`,
-        )
+        );
       }
 
       return invalidEvolution
@@ -97,39 +97,39 @@ module.exports = interactive => {
           (promise, { id, down_script }) =>
             promise /* eslint-disable-line camelcase */
               .then(() => {
-                console.log('')
-                console.log(Yellow, `--- ${id}.sql ---`)
-                console.log(Yellow, down_script)
+                console.log('');
+                console.log(Yellow, `--- ${id}.sql ---`);
+                console.log(Yellow, down_script);
 
                 return awaitConfirmation(
                   'Do you wish to run this degrade script?',
-                )
+                );
               })
               .then(() => {
-                return runQuery(down_script)
+                return runQuery(down_script);
               })
               .then(() =>
                 runQuery(`DELETE FROM ${tableName} WHERE id = ${id};`),
               ),
           Promise.resolve(),
         )
-        .then(() => files.filter(({ id }) => id >= firstInvalidEvolution))
+        .then(() => files.filter(({ id }) => id >= firstInvalidEvolution));
     })
     .then(files => {
-      console.log('')
-      console.log(Blue, 'Running evolve script')
-      console.log('')
+      console.log('');
+      console.log(Blue, 'Running evolve script');
+      console.log('');
 
       return files.reduce((promise, { data, checksum, id }) => {
-        const [upScript, downScript] = data.split('#DOWN')
+        const [upScript, downScript] = data.split('#DOWN');
 
         return promise
           .then(() => {
-            console.log('')
-            console.log(Blue, `--- ${id}.sql ---`)
-            console.log(Blue, upScript)
+            console.log('');
+            console.log(Blue, `--- ${id}.sql ---`);
+            console.log(Blue, upScript);
 
-            return runQuery(upScript)
+            return runQuery(upScript);
           })
           .then(() =>
             runQuery(
@@ -137,21 +137,21 @@ module.exports = interactive => {
                 downScript ? `'${downScript.replace(/'/g, "''")}'` : 'NULL'
               });`,
             ),
-          )
-      }, Promise.resolve())
+          );
+      }, Promise.resolve());
     })
     .then(
       () => {
-        console.log(Green, 'Evolution is successful!')
-        process.exit(0)
+        console.log(Green, 'Evolution is successful!');
+        process.exit(0);
       },
       error => {
         if (error instanceof OperationDeclinedError) {
-          console.error(Red, 'Operation aborted')
+          console.error(Red, 'Operation aborted');
         } else {
-          console.error(Red, error)
+          console.error(Red, error);
         }
-        process.exit(1)
+        process.exit(1);
       },
-    )
-}
+    );
+};
