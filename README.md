@@ -1,32 +1,23 @@
 # @solid-soda/evolitions
 
-Often your migration scenarios are as good as ORM you using. Sometimes it leads to inability (without
-some extra efforts) to use all features of your chosen DB. This library allows you to write 
-migration scenarios using sql and run them with a single console command.
+Often your migration scenarios are as good as ORM you using. Sometimes it leads to inability (without some extra efforts) to use all features of your chosen DB. This library allows you to write migration scenarios using sql and run them with a single console command.
 
 ## Usage example
 
 ```console
 foo@bar:~$ evolitions --init
 Initializing evolutions table evolutions
-
-CREATE TABLE evolutions (
-    id INTEGER NOT NULL,
-    checksum VARCHAR(32) NOT NULL,
-    down_script TEXT NOT NULL,
-    primary key (id)
-);
-
+...
 Evolutions table successfully created!
+
 foo@bar:~$ evolitions
 Running evolve script
 
 --- 1.sql ---
 
 CREATE TABLE Customers (
-    id INTEGER NOT NULL,
+    id   INTEGER     NOT NULL,
     name VARCHAR(32) NOT NULL,
-    description TEXT NOT NULL,
     primary key (id)
 );
 
@@ -37,60 +28,64 @@ foo@bar:~$
 
 ## Installation and configuration
 
-First you need to install trona-evolutions globally via npm
+First you need to install @solid-soda/evolutions via package manager:
 
 ```console
-foo@bar:~$ npm install -g @solid-soda/evolitions
+yarn add @solid-soda/evolitions
+```
+
+Or if you prefer `npm`:
+
+```console
+npm install @solid-soda/evolutions
 ```
 
 Than you need to setup simple configuration file named .trona-config.js and containing script that
 exports object containing fields:
-1) runQuery - MANDATORY callback that accepts SQL as it's first argument and returns Promise object 
-which is rejected in case of failure of said query and in case of SELECT query successfully 
-executed contains array of selected rows in form of an object {[field]: value}.
-2) tableName - OPTIONALLY name of tha table that would contain information about evolutions, it would
-be created automatically by init script. Default - "evolutions".
-3) evolutionsFolderPath - OPTIONALLY relative path to folder that contains .sql files of migration
-scripts if form of a sring or string[]. Default - "evolutions".
+| field                  | type       | description |
+| ---------------------- | ---------- | ----------- |
+| `runQuery`             | MANDATORY  | which is rejected in case of failure of said query and in case of SELECT query successfully executed contains array of selected rows in form of an object `{[field]: value}` |
+| `tableName`            | OPTIONALLY | name of tha table that would contain information about evolutions, it would be created automatically by init script, default - "evolutions" |
+| `evolutionsFolderPath` | OPTIONALLY |relative path to folder that contains .sql files of migration scripts if form of a `string` or `string[]`, default - "evolutions". |
 
 Example of a config for mysql database:
 
 ```javascript
 const mysql = require('mysql');
 
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "123",
-    database: 'playground',
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "123",
+  database: 'playground',
 });
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
+connection.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 module.exports = {
-    evolutionsFolderPath: ['db', 'evolutions'],
-    tableName: 'my_evolutions',
-    runQuery (query) {
-        return new Promise((resolve, reject) => {
-            con.query(query, (err, result) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
-    }
+  evolutionsFolderPath: ['db', 'evolutions'],
+  tableName: 'my_evolutions',
+  runQuery (query) {
+    return new Promise((resolve, reject) => {
+      connection.query(query, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    })
+  }
 }
 ```
 
 After module have been installed run command and .trona-config.js created run
 
 ```console
-foo@bar:~$ evolitions --init
+yarn evolitions --init
 ```
 
 This command will create table with information about evolutions.
@@ -114,9 +109,8 @@ Evolution contents example:
 
 ```sql
 CREATE TABLE Customers (
-    id INTEGER NOT NULL,
+    id   INTEGER     NOT NULL,
     name VARCHAR(32) NOT NULL,
-    description TEXT NOT NULL,
     primary key (id)
 );
 
@@ -127,12 +121,12 @@ DROP TABLE Customers;
 
 Run command 
 ```console
-foo@bar:~$ evolutions
+yarn evolutions
 ```
 
 ## Usage
 
-After you managed to successfully setup @solid-soda/evolitions you can run evolutions-run command.
+After you managed to successfully setup @solid-soda/evolitions you can run `yarn evolutions` command.
 This command will automatically detect any changed or new files in your evolutions folder, run
 respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql,
 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will 
@@ -144,5 +138,5 @@ By default evolution script will ask for a confirmation to run a degrade script.
 But you can disable this feature by ```-y``` or ```--no-interactive``` flag.
 
 ```console
-foo@bar:~$ evolutions -y
+yarn evolutions -y
 ```
