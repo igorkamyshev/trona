@@ -1,14 +1,17 @@
-const fs = require('fs')
-const path = require('path')
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 
-const validateConfig = require('../lib/validateConfig')
-const { Red, Yellow, Green } = require('../lib/colors')
+const fs = require('fs');
+const path = require('path');
+
+const validateConfig = require('../lib/validateConfig');
+const { Red, Yellow, Green } = require('../lib/colors');
 
 module.exports = () => {
   const { tableName, runQuery } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
-  )
-  console.log("Evolution's table init started")
+  );
+  console.log("Evolution's table init started");
   fs.readFile(
     path.join(__dirname, '..', 'lib', 'evolution_table.sql'),
     'utf8',
@@ -17,33 +20,33 @@ module.exports = () => {
         console.log(
           Red,
           "Evolution's initialization failed! Can't read initial evolution sql file!",
-        )
-        console.log('')
-        console.log('')
-        console.error(Red, err)
+        );
+        console.log('');
+        console.log('');
+        console.error(Red, err);
       } else {
-        const modifiedQuery = query.replace('$EVOLUTIONS', tableName)
-        console.log(Yellow, `Initializing evolutions table ${tableName}`)
-        console.log('')
-        console.log(Yellow, modifiedQuery)
-        console.log('')
+        const modifiedQuery = query.replace('$EVOLUTIONS', tableName);
+        console.log(Yellow, `Initializing evolutions table ${tableName}`);
+        console.log('');
+        console.log(Yellow, modifiedQuery);
+        console.log('');
 
         runQuery(modifiedQuery)
           .then(
             () => {
-              console.log(Green, 'Evolutions table successfully created!')
+              console.log(Green, 'Evolutions table successfully created!');
 
-              return 0
+              return 0;
             },
-            error => {
-              console.log(Red, 'An error occured during initialization:')
-              console.error(Red, error)
+            (error) => {
+              console.log(Red, 'An error occured during initialization:');
+              console.error(Red, error);
 
-              return 1
+              return 1;
             },
           )
-          .then(code => process.exit(code))
+          .then((code) => process.exit(code));
       }
     },
-  )
-}
+  );
+};
