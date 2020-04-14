@@ -30,7 +30,7 @@ foo@bar:~$
 
 ## Installation and configuration
 
-First you need to install @solid-soda/evolutions via package manager:
+First you need to install `@solid-soda/evolutions` via package manager:
 
 ```console
 yarn add @solid-soda/evolitions
