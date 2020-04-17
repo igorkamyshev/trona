@@ -1,3 +1,6 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+
 const path = require('path');
 const md5 = require('md5');
 
@@ -9,9 +12,9 @@ const {
   OperationDeclinedError,
 } = require('../lib/operationConfirmation');
 
-const fileNameToNumber = file => parseInt(file.split('.').shift(), 10);
+const fileNameToNumber = (file) => parseInt(file.split('.').shift(), 10);
 
-module.exports = interactive => {
+module.exports = (interactive) => {
   const { runQuery, tableName, evolutionsFolderPath } = validateConfig(
     require(path.join(process.cwd(), '.trona-config.js')),
   );
@@ -21,14 +24,14 @@ module.exports = interactive => {
     : () => Promise.resolve();
 
   getFiles(evolutionsDir)
-    .then(files => files.filter(fileName => /^\d+\.sql$/.test(fileName)))
-    .then(files =>
+    .then((files) => files.filter((fileName) => /^\d+\.sql$/.test(fileName)))
+    .then((files) =>
       files.sort((a, b) => fileNameToNumber(a) - fileNameToNumber(b)),
     )
-    .then(files =>
+    .then((files) =>
       Promise.all(
-        files.map(file =>
-          getFileContent(path.join(evolutionsDir, file)).then(data => ({
+        files.map((file) =>
+          getFileContent(path.join(evolutionsDir, file)).then((data) => ({
             data,
             file,
             checksum: md5(data),
@@ -37,10 +40,10 @@ module.exports = interactive => {
         ),
       ),
     )
-    .then(files =>
+    .then((files) =>
       runQuery(
         `SELECT id, checksum, down_script FROM ${tableName} ORDER BY id ASC;`,
-      ).then(evolutions => ({ files, evolutions })),
+      ).then((evolutions) => ({ files, evolutions })),
     )
     .then(({ files, evolutions }) => {
       if (evolutions.length === 0 && files.length !== 0) {
@@ -61,7 +64,7 @@ module.exports = interactive => {
         evolutionIdsSet.add(id);
       });
       const evolutionIds = Array.from(evolutionIdsSet).sort((a, b) => a - b);
-      evolutionIds.forEach(id => {
+      evolutionIds.forEach((id) => {
         if (
           id < firstInvalidEvolution &&
           (!filesChecksumMap[id] ||
@@ -94,6 +97,7 @@ module.exports = interactive => {
 
       return invalidEvolution
         .reduceRight(
+          // eslint-disable-next-line camelcase
           (promise, { id, down_script }) =>
             promise /* eslint-disable-line camelcase */
               .then(() => {
@@ -115,7 +119,7 @@ module.exports = interactive => {
         )
         .then(() => files.filter(({ id }) => id >= firstInvalidEvolution));
     })
-    .then(files => {
+    .then((files) => {
       console.log('');
       console.log(Blue, 'Running evolve script');
       console.log('');
@@ -145,7 +149,7 @@ module.exports = interactive => {
         console.log(Green, 'Evolution is successful!');
         process.exit(0);
       },
-      error => {
+      (error) => {
         if (error instanceof OperationDeclinedError) {
           console.error(Red, 'Operation aborted');
         } else {
