@@ -46,6 +46,7 @@
   },
   "scripts": {
     "pretty": "yarn prettier --write .",
+    "prepare": "echo 'Alreary prepared'",
     "commit": "yarn git-cz",
     "lint:code": "yarn eslint \"./**/*.{js,jsx}\"",
     "release": "yarn standard-version"
