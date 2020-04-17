@@ -1,6 +1,6 @@
 {
   "name": "@solid-soda/evolutions",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Simple library providing scala-play like evolutions",
   "bin": "./bin/index.js",
   "repository": {
