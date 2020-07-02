@@ -1,4 +1,4 @@
-# @solid-soda/evolitions
+# @solid-soda/evolutions
 
 [![Scripts sets up by @solid-soda/scripts v2.1.0](https://img.shields.io/static/v1?label=@solid-soda/scripts&message=2.1.0&color=75ddf4)](https://github.com/solid-soda/scripts)
 
@@ -7,12 +7,12 @@ Often your migration scenarios are as good as ORM you using. Sometimes it leads 
 ## Usage example
 
 ```console
-foo@bar:~$ evolitions --init
+foo@bar:~$ evolutions --init
 Initializing evolutions table evolutions
 ...
 Evolutions table successfully created!
 
-foo@bar:~$ evolitions
+foo@bar:~$ evolutions
 Running evolve script
 
 --- 1.sql ---
@@ -33,7 +33,7 @@ foo@bar:~$
 First you need to install `@solid-soda/evolutions` via package manager:
 
 ```console
-yarn add @solid-soda/evolitions
+yarn add @solid-soda/evolutions
 ```
 
 Or if you prefer `npm`:
@@ -87,7 +87,7 @@ module.exports = {
 After module have been installed run command and .trona-config.js created run
 
 ```console
-yarn evolitions --init
+yarn evolutions --init
 ```
 
 This command will create table with information about evolutions.
@@ -130,7 +130,7 @@ yarn evolutions
 
 ## Usage
 
-After you managed to successfully setup @solid-soda/evolitions you can run `yarn evolutions` command.
+After you managed to successfully setup @solid-soda/evolutions you can run `yarn evolutions` command.
 This command will automatically detect any changed or new files in your evolutions folder, run
 respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql,
 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will
