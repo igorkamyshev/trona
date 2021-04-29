@@ -1,0 +1,28 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@yarnpkg/pnpify"
+    versions:
+    - 2.4.0
+    - 3.0.0-rc.1
+    - 3.0.0-rc.2
+  - dependency-name: "@commitlint/config-conventional"
+    versions:
+    - 11.0.0
+    - 12.0.0
+    - 12.0.1
+    - 12.1.0
+  - dependency-name: "@commitlint/cli"
+    versions:
+    - 11.0.0
+    - 12.0.0
+    - 12.0.1
+    - 12.1.0
+  - dependency-name: lint-staged
+    versions:
+    - 10.5.3
