@@ -6,3 +6,5 @@
 .eslintignore
 .eslintrs
 .prettierignore
+.env
+evolutions

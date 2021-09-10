@@ -1,18 +1,12 @@
-# @solid-soda/evolutions
-
-[![Scripts sets up by @solid-soda/scripts v2.1.0](https://img.shields.io/static/v1?label=@solid-soda/scripts&message=2.1.0&color=75ddf4)](https://github.com/solid-soda/scripts)
+# trona
 
 Often your migration scenarios are as good as ORM you using. Sometimes it leads to inability (without some extra efforts) to use all features of your chosen DB. This library allows you to write migration scenarios using sql and run them with a single console command.
 
 ## Usage example
 
 ```console
-foo@bar:~$ evolutions --init
-Initializing evolutions table evolutions
-...
-Evolutions table successfully created!
+foo@bar:~$ yarn trona
 
-foo@bar:~$ evolutions
 Running evolve script
 
 --- 1.sql ---
@@ -30,16 +24,10 @@ foo@bar:~$
 
 ## Installation and configuration
 
-First you need to install `@solid-soda/evolutions` via package manager:
+First you need to install `trona` via package manager:
 
 ```console
-yarn add @solid-soda/evolutions
-```
-
-Or if you prefer `npm`:
-
-```console
-npm install @solid-soda/evolutions
+yarn add trona
 ```
 
 Than you need to setup simple configuration file named .trona-config.js and containing script that
@@ -47,50 +35,25 @@ exports object containing fields:
 | field | type | description |
 | ---------------------- | ---------- | ----------- |
 | `runQuery` | MANDATORY | which is rejected in case of failure of said query and in case of SELECT query successfully executed contains array of selected rows in form of an object `{[field]: value}` |
-| `tableName` | OPTIONALLY | name of tha table that would contain information about evolutions, it would be created automatically by init script, default - "evolutions" |
-| `evolutionsFolderPath` | OPTIONALLY |relative path to folder that contains .sql files of migration scripts if form of a `string` or `string[]`, default - "evolutions". |
 
 Example of a config for mysql database:
 
 ```javascript
-const mysql = require('mysql');
+import PG from 'pg';
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '123',
-  database: 'playground',
+const client = new PG.Client({
+  // ...
 });
 
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected!');
-});
+await client.connect();
 
-module.exports = {
-  evolutionsFolderPath: ['db', 'evolutions'],
-  tableName: 'my_evolutions',
-  runQuery(query) {
-    return new Promise((resolve, reject) => {
-      connection.query(query, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  },
-};
+console.log(`Connected to database`);
+
+export function runQuery(query) {
+  return client.query(query).then((result) => result.rows);
+}
 ```
 
-After module have been installed run command and .trona-config.js created run
-
-```console
-yarn evolutions --init
-```
-
-This command will create table with information about evolutions.
 Than create a folder with for your evolutions script and add your first evolution to it. Note the
 rules which you should follow writing said evolutions:
 
@@ -127,6 +90,8 @@ Run command
 ```console
 yarn evolutions
 ```
+
+This command will create table with information about evolutions, if it isn't exist. After it execute all your evolutions.
 
 ## Usage
 
