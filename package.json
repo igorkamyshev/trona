@@ -1,7 +1,7 @@
 {
   "name": "trona",
-  "version": "1.0.0-beta.3",
-  "description": "Simple library providing scala-play like evolutions",
+  "version": "1.0.0",
+  "description": "Write DB migrations with SQL and run them with a CLI",
   "bin": "./bin.js",
   "type": "module",
   "repository": {
