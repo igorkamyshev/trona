@@ -49,12 +49,30 @@ const client = new PG.Client({
 });
 
 await client.connect();
-
 console.log(`Connected to database`);
 
 export function runQuery(query) {
   return client.query(query).then((result) => result.rows);
 }
+```
+
+### MySQL example
+
+```javascript
+import mysql from 'mysql';
+import { promisify } from 'util';
+
+const connection = mysql.createConnection({
+  // ...
+});
+
+const connect = promisify(connection.connect).bind(connection);
+const runQuery = promisify(connection.query).bind(connection);
+
+await connect();
+console.log(`Connected to database`);
+
+export { runQuery };
 ```
 
 ## Write evolutions
