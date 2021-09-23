@@ -17,9 +17,14 @@ sade('trona', true)
   .version(version)
   .describe('Apply evolutions to database')
   .option('-y, --no-interactive', 'Skip interactive questions', false)
-  .action(async ({ y: noInteractive }) => {
+  .option('-c, --config-path', 'Custom path to config', null)
+  .option('-d, --evolutions-dir', 'Custom evolutions directory', null)
+  .action(async ({ y: noInteractive, c: configPath, d: evolutionsDirPath }) => {
     try {
-      const { tableName, runQuery, evolutionsPath } = await getConfig();
+      const { tableName, runQuery, evolutionsPath } = await getConfig({
+        configPath,
+        evolutionsDirPath,
+      });
 
       try {
         const modifiedQuery = createInitTableQuery(tableName);

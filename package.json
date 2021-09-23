@@ -42,6 +42,7 @@
     "lint-staged": "^11.1.2",
     "prettier": "^2.0.4",
     "simple-git-hooks": "^2.6.1",
+    "sqlite3": "^5.0.2",
     "uvu": "^0.5.1"
   },
   "scripts": {

@@ -3,7 +3,7 @@
 This library allows you to write migration scenarios using SQL and run them with a simple CLI.
 
 - **Simple**: only plain SQL
-- **Lightweight**: only 6.8 kB in node_modules
+- **Lightweight**: only 5.6 kB in node_modules
 - **Modern**: ESM support out of the box
 
 ## Usage example
