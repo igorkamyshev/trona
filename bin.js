@@ -5,7 +5,10 @@ import kleur from 'kleur';
 import { version } from './lib/current_version.js';
 import { getConfig } from './lib/config.js';
 import { print } from './lib/printer.js';
-import { createInitTableQuery } from './lib/evolution_table_query.js';
+import {
+  createInitTableExistsQuery,
+  createInitTableQuery,
+} from './lib/evolution_table_query.js';
 import { getEvolutions } from './lib/evolutions.js';
 import {
   findInconsistentEvolutionId,
@@ -22,16 +25,23 @@ sade('trona', true)
       const { tableName, runQuery, evolutionsPath } = await getConfig();
 
       try {
-        const modifiedQuery = createInitTableQuery(tableName);
+        const modifiedExistsQuery = createInitTableExistsQuery(tableName);
+        const modifiedInitQuery = createInitTableQuery(tableName);
 
-        print(
-          kleur.yellow(`Evolution's table ${tableName} init started`),
-          kleur.yellow(modifiedQuery),
-        );
+        const initTableIsExists = await runQuery(modifiedExistsQuery);
 
-        await runQuery(modifiedQuery);
+        if (initTableIsExists[0].exists) {
+          print(kleur.green(`Evolution's table '${tableName}' found`));
+        } else {
+          print(
+            kleur.yellow(`Evolution's table '${tableName}' init started`),
+            kleur.yellow(modifiedInitQuery),
+          );
 
-        print(kleur.green('Evolutions table is OK'));
+          await runQuery(modifiedInitQuery);
+
+          print(kleur.green('Evolutions table created'));
+        }
       } catch (error) {
         print(
           kleur.red('An error occured during initialization:'),
