@@ -36,8 +36,8 @@ yarn add trona
 
 ## Configuration
 
-Than you need to setup simple configuration file named `.trona-config.js` and containing script that
-exports async function `runQuery`. The function should be rejected in case of failure of said query and in case of SELECT query successfully executed contains array of selected rows in form of an object `{[field]: value}`.
+Then you need to setup simple configuration file named `.trona-config.js` and containing script that
+exports async function `runQuery`. The function should be rejected in case of failure of said query and in case of SELECT query successfully executed returns array of selected rows in form of an object `{[field]: value}`.
 
 ### PostgreSQL example
 
@@ -112,11 +112,11 @@ Run command
 yarn trona
 ```
 
-This command will create table with information about evolutions, if it isn't exist. After it execute all your evolutions.
+This command will create table with information about evolutions, if it doesn't exist. After it will execute all your evolutions.
 
 ## Usage
 
-After you managed to successfully setup `trona` you can run `yarn trona` command. This command will automatically detect any changed or new files in your evolutions folder, run respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql, 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will run fallback for 3.sql and 2.sql and than run 2.sql, 3.sql, and 4.sql scripts)
+After you managed to successfully setup `trona` you can run `yarn trona` command. This command will automatically detect any changed or new files in your evolutions folder, run respected fallback scripts if needed and than evolve your databae schema (e. g. if you have 1.sql, 2.sql, and 3.sql evolutions already in your database, you have changed 2.sql and added 4.sql it will run fallback for 3.sql and 2.sql and then run 2.sql, 3.sql, and 4.sql scripts)
 
 ## Options
 
