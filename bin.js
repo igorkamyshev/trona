@@ -44,7 +44,7 @@ sade('trona', true)
       const evolutions = await getEvolutions(evolutionsPath);
 
       const executedEvolutionInfo = await runQuery(
-        `SELECT id, checksum, down_script FROM ${tableName} ORDER BY id ASC;`,
+        `SELECT id, file, checksum, down_script FROM ${tableName} ORDER BY id ASC;`,
       );
 
       const firstInconsistentEvolutionId = findInconsistentEvolutionId({
@@ -57,9 +57,13 @@ sade('trona', true)
         process.exit(0);
       }
 
+      const firstInconsistentEvolutionFileName = evolutions.find(
+        (a) => a.id === firstInconsistentEvolutionId,
+      ).file;
+
       print(
         kleur.yellow(
-          `Your first inconsistent evolution is ${firstInconsistentEvolutionId}.sql`,
+          `Your first inconsistent evolution is ${firstInconsistentEvolutionFileName}`,
         ),
       );
 
@@ -76,8 +80,8 @@ sade('trona', true)
         );
       }
 
-      for (const { down_script: downScript, id } of evolutionsToDegrade) {
-        print(kleur.yellow(`--- ${id}.sql ---`), kleur.yellow(downScript));
+      for (const { down_script: downScript, id, file } of evolutionsToDegrade) {
+        print(kleur.yellow(`--- ${file} ---`), kleur.yellow(downScript));
 
         await confirmOperation({
           question: 'Do you wish to run this degrade script?',
@@ -97,15 +101,15 @@ sade('trona', true)
         print(kleur.blue('Running evolve scripts'));
       }
 
-      for (const { data, id, checksum } of evolutionsToExecute) {
+      for (const { data, id, file, checksum } of evolutionsToExecute) {
         const [upScript, downScript] = data.split('#DOWN');
 
-        print(kleur.blue(`--- ${id}.sql ---`), kleur.blue(upScript));
+        print(kleur.blue(`--- ${file} ---`), kleur.blue(upScript));
 
         await runQuery(upScript);
 
         await runQuery(
-          `INSERT INTO ${tableName} (id, checksum, down_script) VALUES (${id}, '${checksum}', ${
+          `INSERT INTO ${tableName} (id, file, checksum, down_script) VALUES (${id}, '${file}', '${checksum}', ${
             downScript ? `'${downScript.replace(/'/g, "''").trim()}'` : 'NULL'
           });`,
         );
