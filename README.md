@@ -3,7 +3,7 @@
 This library allows you to write migration scenarios using SQL and run them with a simple CLI.
 
 - **Simple**: only plain SQL
-- **Lightweight**: only 6.8 kB in node_modules
+- **Lightweight**: only 5.6 kB in node_modules
 - **Modern**: ESM support out of the box
 
 ## Usage example
@@ -127,3 +127,15 @@ By default evolution script will ask for a confirmation to run a degrade script.
 ```console
 yarn trona -y
 ```
+
+## Maintenance
+
+### Release flow
+
+1. Bump `version` in [package.json](./package.json)
+2. Fill [CHANGELOG.md](./CHANGELOG.md)
+3. Commit changes by `git commin -m "Release X.X.X"`
+4. Create git tag for release by `git tag -a vX.X.X -m "vX.X.X"`
+5. Push changes to remote by `git push --follow-tags`
+6. Release package to registry by `yarn clean-publish`
+7. Fill release page with changelog on GitHub

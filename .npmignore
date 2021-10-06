@@ -8,3 +8,9 @@
 .prettierignore
 .env
 evolutions
+tests
+.github
+.eslintrc
+:test_db:
+.babelrc
+.trona-config.js
