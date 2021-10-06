@@ -75,29 +75,6 @@ console.log(`Connected to database`);
 export { runQuery };
 ```
 
-### SQLite example
-
-```js
-import sqlite from 'sqlite3';
-import { promisify } from 'util';
-
-const db = new sqlite.Database(':test_db:');
-
-export async function runQuery(query) {
-  let execute;
-
-  if (query.startsWith('SELECT')) {
-    execute = promisify(db.all).bind(db);
-  } else {
-    execute = promisify(db.run).bind(db);
-  }
-
-  const result = await execute(query);
-
-  return result ?? [];
-}
-```
-
 ## Write evolutions
 
 Create a folder `evolutions` for your evolutions script and add your first evolution to it. Note the rules which you should follow writing said evolutions:
