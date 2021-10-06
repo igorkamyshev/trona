@@ -13,3 +13,4 @@ tests
 .eslintrc
 :test_db:
 .babelrc
+.trona-config.js
