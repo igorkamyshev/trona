@@ -529,9 +529,9 @@ chownr@^1.1.4:
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
 clean-publish@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/clean-publish/-/clean-publish-3.2.0.tgz#98a9efe9bcd5ad906ad6dfe1f47029087ca3915d"
-  integrity sha512-0KWS7/bJ3Bl/m/9bHDhitRjR6r8oZgZVL/opRBgSuqfdCII+OAFneJZ5UN6lAmetww6ASgEyKtS/q3Inj7R5HQ==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/clean-publish/-/clean-publish-3.3.0.tgz#ae87cd5d5a8b097f869370d3ebe8a9f3ce9b13f4"
+  integrity sha512-rATTJE8/XQYX24U9UOn7dBxFc8UvCKk+v/MjD2S1Uzx/JexgYxq7Az+DTR3ifWihfGw46WZMYUZ8OSruEferfA==
   dependencies:
     cross-spawn "^7.0.3"
     fast-glob "^3.2.7"
