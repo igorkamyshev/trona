@@ -29,10 +29,7 @@ sade('trona', true)
       try {
         const modifiedQuery = createInitTableQuery(tableName);
 
-        print(
-          kleur.yellow(`Evolution's table ${tableName} init started`),
-          kleur.yellow(modifiedQuery),
-        );
+        print(kleur.yellow(`Evolution's table '${tableName}' init started`));
 
         await runQuery(modifiedQuery);
 
