@@ -46,7 +46,18 @@ sade('trona', true)
         throw error;
       }
 
-      const evolutions = await getEvolutions(evolutionsPath);
+      const { evolutions, outOfScopeFiles } = await getEvolutions(
+        evolutionsPath,
+      );
+
+      if (outOfScopeFiles.length > 0)
+        print(
+          kleur.yellow(
+            `Warning!. Next evolution files are out of scope because of incorrect naming:\n${outOfScopeFiles
+              .map((x) => `- ${x}`)
+              .join('\n')}`,
+          ),
+        );
 
       const executedEvolutionInfo = await runQuery(
         `SELECT id, checksum, down_script FROM ${tableName} ORDER BY id ASC;`,

@@ -79,8 +79,9 @@ export { runQuery };
 
 Create a folder `evolutions` for your evolutions script and add your first evolution to it. Note the rules which you should follow writing said evolutions:
 
-1. Name file {evolution-number}-{text}.sql. Text part is optional and can be omitted (e.g. both `1.sql` and `1-create-table.sql` are correct). Note: file name should always start with number. Evolution script file with any other symbol will be ignored (e.g. `*1-incorrect.sql` or `-1-worng.sql`)
+1. Name file `{evolution-number}-{text}.sql`. Text part `-{text}` is optional and can be omitted (e.g. both `1.sql` and `1-create-table.sql` are correct). Note: file name should always start with number. Evolution script file with any other symbol will be ignored (e.g. `*1-incorrect.sql` or `-1-worng.sql`) and warning will be shown during execution.
 2. Complement evolution file with fallback scripts. Separate evolution and fallback scripts with "#DOWN" comment as it show in example below.
+3. Execution will not be started in case of any conflict of numbering is found (e.g. existing any of two: `1-abba.sql`, `1-baab.sql`, `1.sql`, `1-baba.sql`)
 
 Folder content example:
 
