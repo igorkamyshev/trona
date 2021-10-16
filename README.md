@@ -134,6 +134,7 @@ You can change path to trona config file by providing `-c` or `--config-path` op
 ```console
 yarn trona -c config/.trona-my-config.js
 ```
+
 ### Custom evolutions folder
 
 Custom evolutions folder can be choosen by providing `-d` or `--evolutions-dir` option. By default `evolutions` folder is being used.
@@ -141,21 +142,15 @@ Custom evolutions folder can be choosen by providing `-d` or `--evolutions-dir` 
 ```console
 yarn trona -d migrations
 ```
-### Silent execution mode
 
-Number of logs can reduced by providing `-s` or `--silent` option. Trona will show only critical messages in case if this option is passed:
-- In case if user interactions is requiered (e.g. promt for executon of degrade script)
-- Errors (e.g. not able to start execution because of evolutions sequene conflicts)
-```console
-yarn trona -s
-```
 ### Check down script
 
-By passing `-k` or `--check-down` option you can activate degrade script validation. Trona will try to execute `up->down->up` script sequence vs. just `up` in common case. 
+By passing `-k` or `--check-down` option you can activate degrade script validation. Trona will try to execute `up->down->up` script sequence vs. just `up` in common case.
 
 ```console
 yarn trona -k
 ```
+
 ## Maintenance
 
 ### Release flow
