@@ -143,14 +143,6 @@ Custom evolutions folder can be choosen by providing `-d` or `--evolutions-dir` 
 yarn trona -d migrations
 ```
 
-### Check down script
-
-By passing `-k` or `--check-down` option you can activate degrade script validation. Trona will try to execute `up->down->up` script sequence vs. just `up` in common case.
-
-```console
-yarn trona -k
-```
-
 ## Maintenance
 
 ### Release flow
