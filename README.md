@@ -128,6 +128,17 @@ By default evolution script will ask for a confirmation to run a degrade script.
 yarn trona -y
 ```
 
+### Silent execution mode
+
+Number of logs can reduced by providing `-s` or `--silent` option. Trona will show only critical messages in case if this option is passed:
+
+- In case if user interactions is requiered (e.g. promt for executon of degrade script)
+- Errors (e.g. not able to start execution because of evolutions sequene conflicts)
+
+```console
+yarn trona -s
+```
+
 ## Maintenance
 
 ### Release flow
