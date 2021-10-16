@@ -5,3 +5,4 @@ package-lock.json
 evolutions
 .trona-config.js
 :test_db:
+.vscode
