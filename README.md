@@ -36,8 +36,7 @@ yarn add trona
 
 ## Configuration
 
-Then you need to setup simple configuration file named `.trona-config.js` and containing script that
-exports async function `runQuery`. The function should be rejected in case of failure of said query and in case of SELECT query successfully executed returns array of selected rows in form of an object `{[field]: value}`.
+Then you need to setup simple configuration file named `.trona-config.js` and containing script that exports async function `runQuery`. The function should be rejected in case of failure of said query and in case of SELECT query successfully executed returns array of selected rows in form of an object `{[field]: value}`.
 
 ### PostgreSQL example
 
@@ -127,6 +126,22 @@ By default evolution script will ask for a confirmation to run a degrade script.
 
 ```console
 yarn trona -y
+```
+
+### Config
+
+You can change path to trona config file by providing `-c` or `--config-path` option (by default trona will try to find config file `.trona-config.js` in a root directory).
+
+```console
+yarn trona -c config/.trona-my-config.js
+```
+
+### Custom evolutions folder
+
+Custom evolutions folder can be choosen by providing `-d` or `--evolutions-dir` option. By default `evolutions` folder is being used.
+
+```console
+yarn trona -d migrations
 ```
 
 ## Maintenance
