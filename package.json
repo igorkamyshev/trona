@@ -35,7 +35,7 @@
     "@babel/eslint-parser": "^7.15.4",
     "clean-publish": "^3.2.0",
     "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "latest",
     "eslint-plugin-import": "^2.20.2",
