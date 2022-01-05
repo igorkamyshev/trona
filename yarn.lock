@@ -515,15 +515,15 @@ chownr@^1.1.4:
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
 clean-publish@^3.2.0:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/clean-publish/-/clean-publish-3.4.3.tgz#1b12ac1d26549098bf49d0c17fdc9e86824d66be"
-  integrity sha512-PXq2JrWYqsovKjaO7NqOi47vMHV/6VbkP8fxPK4e3RBsoghAJXemwCiBCqhymgIIxD67G0VfRnkCJCa78+zqDw==
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/clean-publish/-/clean-publish-3.4.5.tgz#c46c943f81f7316fb3c12ec35449308fcce63176"
+  integrity sha512-wxtaEqCy/B7lch+bpTPmx9wI8owTODa619UOVA1XfyNaM2bjwv1SkR1IJNDA6rtf89bjiz6UkpfU5HcEL8YJIw==
   dependencies:
     cross-spawn "^7.0.3"
     fast-glob "^3.2.7"
     fs-extra "^10.0.0"
     hosted-git-info "^4.0.2"
-    lilconfig "^2.0.3"
+    lilconfig "^2.0.4"
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -1619,7 +1619,7 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lilconfig@2.0.4, lilconfig@^2.0.3:
+lilconfig@2.0.4, lilconfig@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.0.4.tgz#f4507d043d7058b380b6a8f5cb7bcd4b34cee082"
   integrity sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA==
