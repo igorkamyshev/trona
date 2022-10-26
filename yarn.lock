@@ -852,9 +852,9 @@ eslint-module-utils@^2.7.1:
     pkg-dir "^2.0.0"
 
 eslint-plugin-import-helpers@^1.0.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import-helpers/-/eslint-plugin-import-helpers-1.2.0.tgz#36c6b19ee1470237aff3bb5a10c19fc1f325dc13"
-  integrity sha512-xlGTXwavBcvILcJJIuFZkXE6eMr86BgpcWTzUD0HepvYiTJXtN2enEsJT6SnuXONWflIgw24p9xWA1P/ZY2Nyw==
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import-helpers/-/eslint-plugin-import-helpers-1.3.1.tgz#48721a702e758b5d2220ee119d6199e6e29b6819"
+  integrity sha512-MrACDozK6TmTJoCFHD71Ew3r5210Za3zlTrhX+fQGsyvxceaFvAI9AcvZ/8oSU0pZ61G3nDEn6mXY0T4S8cJEg==
 
 eslint-plugin-import@^2.20.2:
   version "2.25.3"
